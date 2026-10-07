@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_textile_register_rolls_wizard_form" model="ir.ui.view">
+        <field name="name">textile.register.rolls.wizard.form</field>
+        <field name="model">textile.register.rolls.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Register Fabric Rolls">
+                <sheet>
+                    <group>
+                        <group name="mo_info" string="Manufacturing Details">
+                            <field name="production_id"/>
+                            <field name="product_id"/>
+                            <field name="planned_qty"/>
+                        </group>
+                        <group name="roll_summary" string="Balance &amp; Scrap">
+                            <field name="existing_good_qty"/>
+                            <field name="new_rolls_total_m"/>
+                            <field name="production_loss_m"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="rolls_page" string="Fabric Rolls">
+                            <field name="line_ids">
+                                <list editable="bottom" string="Rolls">
+                                    <field name="length_m"/>
+                                    <field name="weight_kg"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="action_register_rolls" string="Register Rolls" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

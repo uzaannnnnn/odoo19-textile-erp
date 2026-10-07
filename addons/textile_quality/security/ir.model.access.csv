@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_textile_defect_type_user,textile.defect.type.user,model_textile_defect_type,textile_core.group_textile_user,1,0,0,0
+access_textile_defect_type_manager,textile.defect.type.manager,model_textile_defect_type,textile_core.group_textile_manager,1,1,1,1
+access_textile_defect_line_user,textile.defect.line.user,model_textile_defect_line,textile_core.group_textile_user,1,0,0,0
+access_textile_defect_line_qc,textile.defect.line.qc,model_textile_defect_line,textile_core.group_textile_qc,1,1,1,1
+access_textile_defect_line_manager,textile.defect.line.manager,model_textile_defect_line,textile_core.group_textile_manager,1,1,1,1
+access_textile_inspection_user,textile.inspection.user,model_textile_inspection,textile_core.group_textile_user,1,0,0,0
+access_textile_inspection_qc,textile.inspection.qc,model_textile_inspection,textile_core.group_textile_qc,1,1,1,0
+access_textile_inspection_manager,textile.inspection.manager,model_textile_inspection,textile_core.group_textile_manager,1,1,1,1

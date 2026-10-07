@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Customers -->
+    <record id="partner_customer_abc" model="res.partner">
+        <field name="name">PT ABC Garment</field>
+        <field name="is_company">True</field>
+    </record>
+
+    <record id="partner_customer_xyz" model="res.partner">
+        <field name="name">PT XYZ Apparel</field>
+        <field name="is_company">True</field>
+    </record>
+
+    <!-- Supplier -->
+    <record id="partner_supplier_yarn" model="res.partner">
+        <field name="name">PT Supplier Yarn</field>
+        <field name="is_company">True</field>
+    </record>
+
+    <!-- Raw Material: Yarn Polyester (Kg) -->
+    <record id="product_yarn_polyester" model="product.template">
+        <field name="name">Yarn Polyester</field>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
+        <field name="is_textile_product">True</field>
+        <field name="textile_type">raw_material</field>
+        <field name="material">Polyester</field>
+        <field name="composition">100% PES</field>
+    </record>
+
+    <!-- Finished Fabric: Polyester Grey Fabric (Meter) -->
+    <record id="product_polyester_grey_fabric" model="product.template">
+        <field name="name">Polyester Grey Fabric</field>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="is_textile_product">True</field>
+        <field name="textile_type">fabric</field>
+        <field name="fabric_type">woven</field>
+        <field name="material">Polyester</field>
+        <field name="composition">100% PES</field>
+        <field name="color">Grey</field>
+        <field name="width_cm">150.0</field>
+        <field name="gsm">120.0</field>
+    </record>
+</odoo>

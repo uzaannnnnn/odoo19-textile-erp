@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_textile_roll" model="ir.actions.report">
+        <field name="name">Roll_Labels</field>
+        <field name="model">textile.roll</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">textile_inventory.report_roll_label_template</field>
+        <field name="report_file">textile_inventory.report_roll_label_template</field>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+        <field name="paperformat_id" ref="textile_inventory.paperformat_textile_roll_label"/>
+        <field name="binding_model_id" ref="model_textile_roll"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_roll_label_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="roll">
+                <div class="article page" t-att-data-oe-model="roll._name" t-att-data-oe-id="roll.id"
+                     style="width: 92mm; margin: 0 auto; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #111; box-sizing: border-box;">
+                    
+                    <div style="border: 2px solid #000; border-radius: 4px; padding: 2.5mm 3mm; background: #fff;">
+                        <!-- 1. Header -->
+                        <div style="border-bottom: 1.5px solid #000; padding-bottom: 1mm; margin-bottom: 1.5mm; text-align: center;">
+                            <div style="font-size: 10pt; font-weight: 800; text-transform: uppercase;">
+                                <t t-esc="roll.company_id.name or roll.env.company.name"/>
+                            </div>
+                            <div style="font-size: 6.5pt; font-weight: 600; color: #444;">
+                                FABRIC ROLL IDENTIFICATION
+                            </div>
+                        </div>
+
+                        <!-- 2. Roll Number -->
+                        <div style="background: #000; color: #fff; padding: 2mm 1mm; text-align: center; border-radius: 2px; margin-bottom: 2mm;">
+                            <div style="font-size: 6pt; font-weight: 700; color: #ccc;">ROLL NUMBER</div>
+                            <div style="font-size: 16pt; font-weight: 900; letter-spacing: 0.5px; font-family: 'Courier New', monospace;">
+                                <t t-esc="roll.name"/>
+                            </div>
+                        </div>
+
+                        <!-- 3. Product -->
+                        <div style="border-bottom: 1px solid #333; padding-bottom: 1mm; margin-bottom: 1.5mm;">
+                            <div style="font-size: 6pt; font-weight: 700; text-transform: uppercase; color: #555;">PRODUCT</div>
+                            <div style="font-size: 10pt; font-weight: 800; line-height: 1.1; color: #000;">
+                                <t t-esc="roll.product_id.display_name"/>
+                            </div>
+                        </div>
+
+                        <!-- 4. QC & Grade -->
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 1.5mm;">
+                            <tr>
+                                <td style="width: 50%; padding-right: 1.5mm; vertical-align: top;">
+                                    <div style="border: 1.5px solid #000; padding: 1.5mm 1mm; text-align: center; border-radius: 2px;">
+                                        <div style="font-size: 6pt; font-weight: 700; color: #555;">GRADE</div>
+                                        <div style="font-size: 11pt; font-weight: 900; color: #000;">
+                                            <t t-if="roll.grade">GRADE <t t-esc="roll.grade"/></t>
+                                            <t t-else="">-</t>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="width: 50%; padding-left: 1.5mm; vertical-align: top;">
+                                    <div style="border: 1.5px solid #000; padding: 1.5mm 1mm; text-align: center; border-radius: 2px; background: #f8f8f8;">
+                                        <div style="font-size: 6pt; font-weight: 700; color: #555;">QC STATUS</div>
+                                        <div style="font-size: 11pt; font-weight: 900; color: #000; text-transform: uppercase;">
+                                            <t t-esc="roll.qc_state or 'PENDING'"/>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- 5. Grid -->
+                        <table style="width: 100%; border-collapse: collapse; font-size: 7.5pt; margin-bottom: 1.5mm; border-top: 1px solid #333; border-bottom: 1px solid #333;">
+                            <tr style="border-bottom: 1px dotted #888;">
+                                <td style="padding: 1mm 0; width: 50%;">
+                                    <span style="color: #555; font-size: 6.5pt;">LENGTH: </span>
+                                    <strong style="font-size: 9.5pt; color: #000;"><t t-esc="'%.2f' % roll.length_m"/> m</strong>
+                                </td>
+                                <td style="padding: 1mm 0; width: 50%;">
+                                    <span style="color: #555; font-size: 6.5pt;">WEIGHT: </span>
+                                    <strong style="font-size: 9.5pt; color: #000;"><t t-esc="'%.2f' % roll.weight_kg"/> kg</strong>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px dotted #888;">
+                                <td style="padding: 1mm 0;">
+                                    <span style="color: #555; font-size: 6.5pt;">LOT: </span>
+                                    <strong style="font-size: 7.5pt; font-family: monospace;"><t t-esc="roll.lot_id.name"/></strong>
+                                </td>
+                                <td style="padding: 1mm 0;">
+                                    <span style="color: #555; font-size: 6.5pt;">MO: </span>
+                                    <strong style="font-size: 7.5pt;"><t t-esc="roll.production_id.name"/></strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 1mm 0;">
+                                    <span style="color: #555; font-size: 6.5pt;">DATE: </span>
+                                    <strong style="font-size: 7.5pt;"><t t-esc="roll.production_date"/></strong>
+                                </td>
+                                <td style="padding: 1mm 0;">
+                                    <span style="color: #555; font-size: 6.5pt;">LOC: </span>
+                                    <strong style="font-size: 7.5pt;"><t t-esc="roll.current_location_id.complete_name or 'WH/Stock'"/></strong>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- 6. QR Code -->
+                        <div style="text-align: center; margin: 1mm 0;">
+                            <span t-out="roll.qr_payload or roll.name"
+                                  t-options="{'widget': 'barcode', 'symbology': 'QR', 'width': 300, 'height': 300, 'img_style': 'width: 28mm; height: 28mm; display: inline-block;'}"/>
+                            <div style="font-size: 7pt; font-family: monospace; font-weight: bold; margin-top: 0.5mm;">
+                                <t t-esc="roll.name"/>
+                            </div>
+                        </div>
+
+                        <!-- 7. Footer -->
+                        <div style="text-align: center; font-size: 5.5pt; color: #666; margin-top: 0.5mm; border-top: 1px solid #ccc; padding-top: 0.5mm;">
+                            OPERATIONAL ROLL LABEL • NO INVENTORY TRANSACTION
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

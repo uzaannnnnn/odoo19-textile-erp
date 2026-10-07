@@ -1,0 +1,15 @@
+{
+  "include": [
+    "addons",
+    "scripts"
+  ],
+  "exclude": [
+    "**/__pycache__",
+    "odoo"
+  ],
+  "extraPaths": [
+    ".",
+    "addons"
+  ],
+  "pythonVersion": "3.12"
+}

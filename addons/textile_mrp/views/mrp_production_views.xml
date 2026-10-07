@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mrp_production_form_textile" model="ir.ui.view">
+        <field name="name">mrp.production.form.textile</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Header Button: Register Rolls -->
+            <xpath expr="//header" position="inside">
+                <button name="action_register_rolls"
+                        string="Register Rolls"
+                        type="object"
+                        class="btn-primary"
+                        invisible="not is_textile_mo or state in ('draft', 'cancel')"/>
+            </xpath>
+
+            <!-- Stat Button in Button Box -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button"
+                        name="action_view_textile_rolls"
+                        type="object"
+                        icon="fa-bars"
+                        invisible="not is_textile_mo">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value"><field name="roll_count"/></span>
+                        <span class="o_stat_text">Rolls</span>
+                    </div>
+                </button>
+            </xpath>
+
+            <!-- Invisible helper fields -->
+            <xpath expr="//sheet" position="inside">
+                <field name="is_textile_mo" invisible="1"/>
+            </xpath>
+
+            <!-- Textile Production Page in Notebook -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Textile Production" name="textile_production_page" invisible="not is_textile_mo">
+                    <group>
+                        <group name="textile_operators" string="Shift &amp; Operator">
+                            <field name="textile_shift_id"/>
+                            <field name="operator_id"/>
+                        </group>
+                        <group name="textile_metrics" string="Output &amp; Scrap">
+                            <field name="good_output_m"/>
+                            <field name="production_loss_m"/>
+                            <field name="roll_count"/>
+                        </group>
+                    </group>
+                    <field name="roll_ids" readonly="1">
+                        <list string="Registered Rolls">
+                            <field name="name"/>
+                            <field name="lot_id"/>
+                            <field name="length_m"/>
+                            <field name="weight_kg"/>
+                            <field name="qc_state" widget="badge"/>
+                            <field name="current_location_id"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

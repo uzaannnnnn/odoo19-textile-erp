@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="textile_roll_mobile_page" name="Textile Roll Mobile View">
+        <html lang="en">
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+                <title>Roll <t t-esc="roll.name"/> - Textile ERP</title>
+                <style>
+                    :root {
+                        --bg-color: #f4f6f9;
+                        --card-bg: #ffffff;
+                        --text-primary: #1f2937;
+                        --text-secondary: #4b5563;
+                        --border-color: #e5e7eb;
+                        --primary: #2563eb;
+                        --badge-pending: #2563eb;
+                        --badge-passed: #16a34a;
+                        --badge-rework: #d97706;
+                        --badge-rejected: #dc2626;
+                    }
+                    body {
+                        margin: 0;
+                        padding: 16px;
+                        background-color: var(--bg-color);
+                        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                        color: var(--text-primary);
+                        line-height: 1.5;
+                    }
+                    .container {
+                        max-width: 500px;
+                        margin: 0 auto;
+                    }
+                    .card {
+                        background: var(--card-bg);
+                        border-radius: 12px;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+                        padding: 20px;
+                        margin-bottom: 16px;
+                        border: 1px solid var(--border-color);
+                    }
+                    .header-card {
+                        text-align: center;
+                        padding-bottom: 16px;
+                    }
+                    .company-name {
+                        font-size: 12px;
+                        font-weight: 700;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        color: var(--text-secondary);
+                    }
+                    .roll-title {
+                        font-size: 24px;
+                        font-weight: 800;
+                        margin: 8px 0;
+                        letter-spacing: 0.5px;
+                        font-family: monospace;
+                    }
+                    .status-badge {
+                        display: inline-block;
+                        padding: 6px 16px;
+                        border-radius: 20px;
+                        font-size: 13px;
+                        font-weight: 700;
+                        letter-spacing: 0.5px;
+                        color: #ffffff;
+                        text-transform: uppercase;
+                    }
+                    .status-pending { background-color: var(--badge-pending); }
+                    .status-passed { background-color: var(--badge-passed); }
+                    .status-rework { background-color: var(--badge-rework); }
+                    .status-rejected { background-color: var(--badge-rejected); }
+                    .section-title {
+                        font-size: 11px;
+                        font-weight: 700;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        color: var(--text-secondary);
+                        margin-bottom: 12px;
+                        border-bottom: 1px solid var(--border-color);
+                        padding-bottom: 6px;
+                    }
+                    .data-row {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 8px 0;
+                        border-bottom: 1px solid #f3f4f6;
+                    }
+                    .data-row:last-child { border-bottom: none; }
+                    .data-label {
+                        color: var(--text-secondary);
+                        font-size: 13px;
+                    }
+                    .data-value {
+                        font-weight: 600;
+                        font-size: 14px;
+                        text-align: right;
+                    }
+                    .data-value.highlight {
+                        font-size: 16px;
+                        color: var(--primary);
+                        font-weight: 700;
+                    }
+                    .btn {
+                        display: block;
+                        width: 100%;
+                        box-sizing: border-box;
+                        padding: 12px 20px;
+                        text-align: center;
+                        border-radius: 8px;
+                        font-weight: 600;
+                        font-size: 14px;
+                        text-decoration: none;
+                        transition: background-color 0.2s;
+                    }
+                    .btn-primary {
+                        background-color: var(--primary);
+                        color: #ffffff;
+                        margin-top: 8px;
+                    }
+                    .footer-note {
+                        text-align: center;
+                        font-size: 11px;
+                        color: var(--text-secondary);
+                        margin-top: 16px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="card header-card">
+                        <div class="company-name"><t t-esc="roll.company_id.name or roll.env.company.name"/></div>
+                        <div class="roll-title"><t t-esc="roll.name"/></div>
+                        <t t-set="qc" t-value="roll.qc_state or 'pending'"/>
+                        <span t-attf-class="status-badge status-{{ qc }}">
+                            QC: <t t-esc="qc.upper()"/>
+                        </span>
+                    </div>
+
+                    <div class="card">
+                        <div class="section-title">Product &amp; Quality</div>
+                        <div class="data-row">
+                            <span class="data-label">Product</span>
+                            <span class="data-value"><t t-esc="roll.product_id.display_name"/></span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Grade</span>
+                            <span class="data-value">
+                                <t t-if="roll.grade">Grade <t t-esc="roll.grade"/></t>
+                                <t t-else="">Not Graded</t>
+                            </span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Length</span>
+                            <span class="data-value highlight"><t t-esc="'%.2f' % roll.length_m"/> m</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Weight</span>
+                            <span class="data-value"><t t-esc="'%.2f' % roll.weight_kg"/> kg</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="section-title">Traceability &amp; Origin</div>
+                        <div class="data-row">
+                            <span class="data-label">Stock Lot</span>
+                            <span class="data-value font-monospace"><t t-esc="roll.lot_id.name"/></span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Manufacturing Order</span>
+                            <span class="data-value"><t t-esc="roll.production_id.name"/></span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Current Location</span>
+                            <span class="data-value"><t t-esc="roll.current_location_id.complete_name or 'WH/Stock'"/></span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Production Date</span>
+                            <span class="data-value"><t t-esc="roll.production_date"/></span>
+                        </div>
+                    </div>
+
+                    <t t-if="roll.notes">
+                        <div class="card">
+                            <div class="section-title">Notes</div>
+                            <div style="font-size: 13px; color: var(--text-secondary);"><t t-esc="roll.notes"/></div>
+                        </div>
+                    </t>
+
+                    <div class="card" style="text-align: center;">
+                        <a t-attf-href="/web#id={{ roll.id }}&amp;model=textile.roll&amp;view_type=form" class="btn btn-primary">
+                            Open in Odoo ERP
+                        </a>
+                    </div>
+
+                    <div class="footer-note">
+                        Read-Only Physical Roll Identity • Textile ERP V1.1
+                    </div>
+                </div>
+            </body>
+        </html>
+    </template>
+
+    <template id="textile_roll_mobile_error" name="Textile Roll Mobile Error">
+        <html lang="en">
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+                <title><t t-esc="title"/> - Textile ERP</title>
+                <style>
+                    body {
+                        margin: 0;
+                        padding: 30px 16px;
+                        background-color: #f4f6f9;
+                        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                        color: #1f2937;
+                        text-align: center;
+                    }
+                    .card {
+                        max-width: 450px;
+                        margin: 0 auto;
+                        background: #ffffff;
+                        border-radius: 12px;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+                        padding: 30px 20px;
+                        border: 1px solid #e5e7eb;
+                    }
+                    h2 { color: #dc2626; margin-top: 0; }
+                    p { color: #4b5563; font-size: 14px; line-height: 1.6; }
+                    .btn {
+                        display: inline-block;
+                        margin-top: 16px;
+                        padding: 10px 20px;
+                        background: #2563eb;
+                        color: #ffffff;
+                        text-decoration: none;
+                        border-radius: 6px;
+                        font-weight: 600;
+                        font-size: 14px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="card">
+                    <h2><t t-esc="title"/></h2>
+                    <p><t t-esc="message"/></p>
+                    <a href="/web" class="btn">Return to Odoo</a>
+                </div>
+            </body>
+        </html>
+    </template>
+</odoo>

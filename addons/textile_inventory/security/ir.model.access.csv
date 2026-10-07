@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_textile_roll_user,textile.roll.user,model_textile_roll,textile_core.group_textile_user,1,0,0,0
+access_textile_roll_production,textile.roll.production,model_textile_roll,textile_core.group_textile_production,1,1,1,0
+access_textile_roll_qc,textile.roll.qc,model_textile_roll,textile_core.group_textile_qc,1,1,0,0
+access_textile_roll_manager,textile.roll.manager,model_textile_roll,textile_core.group_textile_manager,1,1,1,1

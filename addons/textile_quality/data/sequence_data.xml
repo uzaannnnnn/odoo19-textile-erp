@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_textile_inspection" model="ir.sequence">
+        <field name="name">Textile Quality Inspection Sequence</field>
+        <field name="code">textile.inspection</field>
+        <field name="prefix">QC-%(year)s-</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

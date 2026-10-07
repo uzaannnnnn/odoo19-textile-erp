@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inspection List View -->
+    <record id="view_textile_inspection_list" model="ir.ui.view">
+        <field name="name">textile.inspection.list</field>
+        <field name="model">textile.inspection</field>
+        <field name="arch" type="xml">
+            <list string="Quality Inspections" decoration-success="result == 'passed'" decoration-warning="result == 'rework'" decoration-danger="result == 'rejected'">
+                <field name="name"/>
+                <field name="roll_id"/>
+                <field name="product_id"/>
+                <field name="inspector_id"/>
+                <field name="inspection_date"/>
+                <field name="grade"/>
+                <field name="result" widget="badge" decoration-success="result == 'passed'" decoration-warning="result == 'rework'" decoration-danger="result == 'rejected'"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'done'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Inspection Form View -->
+    <record id="view_textile_inspection_form" model="ir.ui.view">
+        <field name="name">textile.inspection.form</field>
+        <field name="model">textile.inspection</field>
+        <field name="arch" type="xml">
+            <form string="Quality Inspection">
+                <header>
+                    <button name="action_pass"
+                            string="PASS"
+                            type="object"
+                            class="btn-success"
+                            invisible="state == 'done'"/>
+                    <button name="action_rework"
+                            string="REWORK"
+                            type="object"
+                            class="btn-warning"
+                            invisible="state == 'done'"/>
+                    <button name="action_reject"
+                            string="REJECT"
+                            type="object"
+                            class="btn-danger"
+                            invisible="state == 'done'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Inspection Reference"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="roll_details" string="Roll &amp; Product">
+                            <field name="roll_id" readonly="state == 'done'"/>
+                            <field name="product_id"/>
+                            <field name="inspector_id" readonly="state == 'done'"/>
+                            <field name="inspection_date" readonly="state == 'done'"/>
+                        </group>
+                        <group name="measurement_results" string="Measurements &amp; Rating">
+                            <field name="actual_width_cm" readonly="state == 'done'"/>
+                            <field name="actual_gsm" readonly="state == 'done'"/>
+                            <field name="grade" readonly="state == 'done'"/>
+                            <field name="result" widget="badge" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="defects" string="Defect Details">
+                            <field name="defect_line_ids" readonly="state == 'done'">
+                                <list editable="bottom" string="Defects">
+                                    <field name="defect_type_id"/>
+                                    <field name="defect_count"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="notes" string="Notes">
+                            <field name="notes" readonly="state == 'done'" placeholder="Inspector notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Inspection Search View -->
+    <record id="view_textile_inspection_search" model="ir.ui.view">
+        <field name="name">textile.inspection.search</field>
+        <field name="model">textile.inspection</field>
+        <field name="arch" type="xml">
+            <search string="Search Inspections">
+                <field name="name"/>
+                <field name="roll_id"/>
+                <field name="product_id"/>
+                <field name="inspector_id"/>
+                <separator/>
+                <filter string="Draft" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Done" name="filter_done" domain="[('state', '=', 'done')]"/>
+                <separator/>
+                <filter string="Passed" name="filter_passed" domain="[('result', '=', 'passed')]"/>
+                <filter string="Rework" name="filter_rework" domain="[('result', '=', 'rework')]"/>
+                <filter string="Rejected" name="filter_rejected" domain="[('result', '=', 'rejected')]"/>
+                <separator/>
+                <group>
+                    <filter string="Roll" name="group_by_roll" context="{'group_by': 'roll_id'}"/>
+                    <filter string="Result" name="group_by_result" context="{'group_by': 'result'}"/>
+                    <filter string="Grade" name="group_by_grade" context="{'group_by': 'grade'}"/>
+                    <filter string="Inspector" name="group_by_inspector" context="{'group_by': 'inspector_id'}"/>
+                    <filter string="Date" name="group_by_date" context="{'group_by': 'inspection_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Inspection Action -->
+    <record id="action_textile_inspection" model="ir.actions.act_window">
+        <field name="name">Quality Inspections</field>
+        <field name="res_model">textile.inspection</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_textile_inspection_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Perform quality inspection on fabric rolls
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Quality Parent Menu -->
+    <menuitem id="menu_textile_quality"
+              name="Quality"
+              parent="textile_core.menu_textile_root"
+              sequence="40"
+              groups="textile_core.group_textile_user"/>
+
+    <!-- Inspections Submenu -->
+    <menuitem id="menu_textile_quality_inspections"
+              name="Inspections"
+              parent="menu_textile_quality"
+              sequence="10"
+              action="action_textile_inspection"
+              groups="textile_core.group_textile_user"/>
+
+    <!-- Defect Types Submenu -->
+    <menuitem id="menu_textile_quality_defect_types"
+              name="Defect Types"
+              parent="menu_textile_quality"
+              sequence="20"
+              action="action_textile_defect_type"
+              groups="textile_core.group_textile_user"/>
+</odoo>

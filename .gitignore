@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Python tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Logs
+*.log
+logs/
+
+# Odoo runtime & storage
+sessions/
+filestore/
+*.sql
+*.dump
+*.backup
+
+# Odoo core source / local IDE type stubs
+odoo/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Temporary
+*.tmp
+*.swp
+*.swo
+
+# Node
+node_modules/

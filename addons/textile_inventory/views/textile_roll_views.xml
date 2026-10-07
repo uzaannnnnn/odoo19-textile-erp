@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Roll List View -->
+    <record id="view_textile_roll_list" model="ir.ui.view">
+        <field name="name">textile.roll.list</field>
+        <field name="model">textile.roll</field>
+        <field name="arch" type="xml">
+            <list string="Fabric Rolls" decoration-info="qc_state == 'pending'" decoration-success="qc_state == 'passed'" decoration-warning="qc_state == 'rework'" decoration-danger="qc_state == 'rejected'">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="lot_id"/>
+                <field name="length_m" sum="Total Length"/>
+                <field name="weight_kg" sum="Total Weight"/>
+                <field name="grade"/>
+                <field name="qc_state" widget="badge" decoration-info="qc_state == 'pending'" decoration-success="qc_state == 'passed'" decoration-warning="qc_state == 'rework'" decoration-danger="qc_state == 'rejected'"/>
+                <field name="production_id"/>
+                <field name="current_location_id"/>
+                <field name="production_date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Roll Form View -->
+    <record id="view_textile_roll_form" model="ir.ui.view">
+        <field name="name">textile.roll.form</field>
+        <field name="model">textile.roll</field>
+        <field name="arch" type="xml">
+            <form string="Fabric Roll">
+                <header>
+                    <button name="action_print_label" type="object" string="Print Label" class="btn-primary" icon="fa-print"/>
+                    <field name="qc_state" widget="statusbar" statusbar_visible="pending,passed,rework,rejected"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="PASSED" bg_color="text-bg-success" invisible="qc_state != 'passed'"/>
+                    <widget name="web_ribbon" title="REWORK" bg_color="text-bg-warning" invisible="qc_state != 'rework'"/>
+                    <widget name="web_ribbon" title="REJECTED" bg_color="text-bg-danger" invisible="qc_state != 'rejected'"/>
+                    
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="oe_title">
+                            <label for="name" string="Roll Number"/>
+                            <h1 class="d-flex">
+                                <field name="name" readonly="1"/>
+                            </h1>
+                            <div class="text-muted small mt-1">
+                                <span>Company: </span><field name="company_id" readonly="1" class="fw-bold"/>
+                            </div>
+                        </div>
+                        <div class="text-center p-2 border rounded bg-light" style="width: 140px; min-height: 140px;">
+                            <field name="qr_code_image" widget="image" class="d-block mx-auto mb-1" style="max-width: 110px; max-height: 110px;" readonly="1"/>
+                            <div class="small fw-bold text-muted font-monospace"><field name="name" readonly="1"/></div>
+                        </div>
+                    </div>
+
+                    <group>
+                        <group name="roll_origin" string="Identification &amp; Origin">
+                            <field name="product_id" readonly="id"/>
+                            <field name="lot_id" readonly="1"/>
+                            <field name="production_id" readonly="id"/>
+                            <field name="qr_payload" widget="url" readonly="1"/>
+                        </group>
+                        <group name="roll_dimensions" string="Measurements &amp; Grade">
+                            <field name="length_m" readonly="id"/>
+                            <field name="weight_kg"/>
+                            <field name="grade" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="roll_status" string="Warehouse &amp; Status">
+                            <field name="current_location_id" readonly="1"/>
+                        </group>
+                        <group name="roll_dates" string="Dates">
+                            <field name="production_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="notes" string="Notes">
+                            <field name="notes" placeholder="Internal remarks regarding this fabric roll..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Roll Search View -->
+    <record id="view_textile_roll_search" model="ir.ui.view">
+        <field name="name">textile.roll.search</field>
+        <field name="model">textile.roll</field>
+        <field name="arch" type="xml">
+            <search string="Search Fabric Rolls">
+                <field name="name" string="Roll / Lot / MO" filter_domain="['|', '|', ('name', 'ilike', self), ('lot_id.name', 'ilike', self), ('production_id.name', 'ilike', self)]"/>
+                <field name="name" string="Roll Number"/>
+                <field name="lot_id" string="Stock Lot"/>
+                <field name="product_id" string="Product"/>
+                <field name="production_id" string="Manufacturing Order"/>
+                <field name="current_location_id" string="Location"/>
+                <field name="grade" string="Grade"/>
+                <separator/>
+                <filter string="Pending QC" name="filter_pending" domain="[('qc_state', '=', 'pending')]"/>
+                <filter string="Passed" name="filter_passed" domain="[('qc_state', '=', 'passed')]"/>
+                <filter string="Rework" name="filter_rework" domain="[('qc_state', '=', 'rework')]"/>
+                <filter string="Rejected" name="filter_rejected" domain="[('qc_state', '=', 'rejected')]"/>
+                <separator/>
+                <filter string="Grade A" name="filter_grade_a" domain="[('grade', '=', 'A')]"/>
+                <filter string="Grade B" name="filter_grade_b" domain="[('grade', '=', 'B')]"/>
+                <filter string="Grade C" name="filter_grade_c" domain="[('grade', '=', 'C')]"/>
+                <separator/>
+                <group>
+                    <filter string="Product" name="group_by_product" context="{'group_by': 'product_id'}"/>
+                    <filter string="QC Status" name="group_by_qc_state" context="{'group_by': 'qc_state'}"/>
+                    <filter string="Production Order" name="group_by_production" context="{'group_by': 'production_id'}"/>
+                    <filter string="Location" name="group_by_location" context="{'group_by': 'current_location_id'}"/>
+                    <filter string="Production Date" name="group_by_date" context="{'group_by': 'production_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Roll Window Action -->
+    <record id="action_textile_roll" model="ir.actions.act_window">
+        <field name="name">Fabric Rolls</field>
+        <field name="res_model">textile.roll</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_textile_roll_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No fabric rolls registered yet.
+            </p>
+            <p>
+                Fabric rolls are registered from Manufacturing Orders upon output completion.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item for Rolls -->
+    <menuitem id="menu_textile_rolls"
+              name="Rolls"
+              parent="textile_core.menu_textile_root"
+              sequence="20"
+              action="action_textile_roll"
+              groups="textile_core.group_textile_user"/>
+</odoo>

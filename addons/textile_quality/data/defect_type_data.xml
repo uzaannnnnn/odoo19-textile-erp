@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="defect_hole" model="textile.defect.type">
+        <field name="name">Hole</field>
+        <field name="code">HOLE</field>
+        <field name="description">Physical hole or tear in fabric</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="defect_oil_mark" model="textile.defect.type">
+        <field name="name">Oil Mark</field>
+        <field name="code">OIL_MARK</field>
+        <field name="description">Machine oil or lubricant mark</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="defect_stain" model="textile.defect.type">
+        <field name="name">Stain</field>
+        <field name="code">STAIN</field>
+        <field name="description">Dirt, rust, or water stain on fabric</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="defect_broken_yarn" model="textile.defect.type">
+        <field name="name">Broken Yarn</field>
+        <field name="code">BROKEN_YARN</field>
+        <field name="description">Broken warp or weft yarn line</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="defect_crease" model="textile.defect.type">
+        <field name="name">Crease</field>
+        <field name="code">CREASE</field>
+        <field name="description">Sharp fold or permanent crease mark</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="defect_color_uneven" model="textile.defect.type">
+        <field name="name">Color Uneven</field>
+        <field name="code">COLOR_UNEVEN</field>
+        <field name="description">Uneven dyeing or shade variation</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="defect_wrinkle" model="textile.defect.type">
+        <field name="name">Wrinkle</field>
+        <field name="code">WRINKLE</field>
+        <field name="description">Wrinkles on fabric surface</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="defect_needle_line" model="textile.defect.type">
+        <field name="name">Needle Line</field>
+        <field name="code">NEEDLE_LINE</field>
+        <field name="description">Needle line or streak defect</field>
+        <field name="active">True</field>
+    </record>
+</odoo>

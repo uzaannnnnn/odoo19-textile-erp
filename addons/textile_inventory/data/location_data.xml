@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <function model="textile.roll" name="init_textile_locations"/>
+</odoo>

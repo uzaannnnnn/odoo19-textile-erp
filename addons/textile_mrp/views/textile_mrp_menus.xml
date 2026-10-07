@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Production Menu under Textile root -->
+    <menuitem id="menu_textile_production"
+              name="Production"
+              parent="textile_core.menu_textile_root"
+              sequence="30"
+              action="mrp.mrp_production_action"
+              groups="textile_core.group_textile_user"/>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="shift_a" model="textile.shift">
+        <field name="name">Shift A</field>
+        <field name="code">SHIFT-A</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="shift_b" model="textile.shift">
+        <field name="name">Shift B</field>
+        <field name="code">SHIFT-B</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="shift_c" model="textile.shift">
+        <field name="name">Shift C</field>
+        <field name="code">SHIFT-C</field>
+        <field name="active">True</field>
+    </record>
+</odoo>

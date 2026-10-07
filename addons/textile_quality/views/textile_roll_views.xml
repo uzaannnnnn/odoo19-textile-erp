@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_textile_roll_form_quality" model="ir.ui.view">
+        <field name="name">textile.roll.form.quality</field>
+        <field name="model">textile.roll</field>
+        <field name="inherit_id" ref="textile_inventory.view_textile_roll_form"/>
+        <field name="arch" type="xml">
+            <!-- Stat Button in Form View -->
+            <xpath expr="//div[hasclass('oe_title')]" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button class="oe_stat_button"
+                            name="action_view_inspections"
+                            type="object"
+                            icon="fa-check-square-o">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value"><field name="inspection_count"/></span>
+                            <span class="o_stat_text">Inspections</span>
+                        </div>
+                    </button>
+                </div>
+            </xpath>
+
+            <!-- Inspection History Notebook Page -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Quality Inspections" name="quality_inspections">
+                    <field name="inspection_ids" readonly="1">
+                        <list string="Inspection History" decoration-success="result == 'passed'" decoration-warning="result == 'rework'" decoration-danger="result == 'rejected'">
+                            <field name="name"/>
+                            <field name="inspection_date"/>
+                            <field name="inspector_id"/>
+                            <field name="grade"/>
+                            <field name="result" widget="badge"/>
+                            <field name="state" widget="badge"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

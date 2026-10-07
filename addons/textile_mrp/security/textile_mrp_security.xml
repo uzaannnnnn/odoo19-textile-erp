@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="textile_core.group_textile_production" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('mrp.group_mrp_user'))]"/>
+    </record>
+    <record id="textile_core.group_textile_ppic" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('mrp.group_mrp_user')), (4, ref('stock.group_stock_user'))]"/>
+    </record>
+    <record id="textile_core.group_textile_manager" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('mrp.group_mrp_manager'))]"/>
+    </record>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Root Menu -->
+    <menuitem id="menu_textile_root"
+              name="Textile"
+              sequence="25"
+              groups="group_textile_user"
+              web_icon="textile_core,static/description/icon.png"/>
+
+    <!-- Products Menu -->
+    <menuitem id="menu_textile_products"
+              name="Products"
+              parent="menu_textile_root"
+              sequence="10"
+              action="action_textile_product_template"
+              groups="group_textile_user"/>
+
+    <!-- Configuration Menu Container -->
+    <menuitem id="menu_textile_configuration"
+              name="Configuration"
+              parent="menu_textile_root"
+              sequence="100"
+              groups="group_textile_manager"/>
+</odoo>

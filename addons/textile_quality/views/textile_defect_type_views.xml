@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Defect Type List View -->
+    <record id="view_textile_defect_type_list" model="ir.ui.view">
+        <field name="name">textile.defect.type.list</field>
+        <field name="model">textile.defect.type</field>
+        <field name="arch" type="xml">
+            <list string="Defect Types">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Defect Type Form View -->
+    <record id="view_textile_defect_type_form" model="ir.ui.view">
+        <field name="name">textile.defect.type.form</field>
+        <field name="model">textile.defect.type</field>
+        <field name="arch" type="xml">
+            <form string="Defect Type">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Defect Name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Broken Yarn"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="code" placeholder="e.g. BROKEN_YARN"/>
+                        <field name="active"/>
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Description of this defect type..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for Defect Types -->
+    <record id="action_textile_defect_type" model="ir.actions.act_window">
+        <field name="name">Defect Types</field>
+        <field name="res_model">textile.defect.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Define fabric defect categories
+            </p>
+        </field>
+    </record>
+</odoo>

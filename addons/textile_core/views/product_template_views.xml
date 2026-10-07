@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Product Template Form View Extension -->
+    <record id="product_template_form_view_textile" model="ir.ui.view">
+        <field name="name">product.template.form.textile</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='options']" position="inside">
+                <span name="textile_option" class="d-inline-flex">
+                    <field name="is_textile_product"/>
+                    <label for="is_textile_product"/>
+                </span>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Textile Attributes" name="textile_attributes" invisible="not is_textile_product">
+                    <group>
+                        <group name="textile_classification" string="Classification">
+                            <field name="textile_type"/>
+                            <field name="fabric_type" invisible="textile_type != 'fabric'"/>
+                            <field name="material"/>
+                            <field name="composition"/>
+                        </group>
+                        <group name="textile_specifications" string="Specifications">
+                            <field name="color"/>
+                            <field name="width_cm"/>
+                            <field name="gsm"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Product Template Search View Extension -->
+    <record id="product_template_search_view_textile" model="ir.ui.view">
+        <field name="name">product.template.search.textile</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='filter_to_sell']" position="after">
+                <separator/>
+                <filter string="Textile Products" name="filter_textile_products" domain="[('is_textile_product', '=', True)]"/>
+                <filter string="Fabric" name="filter_fabric" domain="[('is_textile_product', '=', True), ('textile_type', '=', 'fabric')]"/>
+                <filter string="Raw Material" name="filter_raw_material" domain="[('is_textile_product', '=', True), ('textile_type', '=', 'raw_material')]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Action for Textile Products -->
+    <record id="action_textile_product_template" model="ir.actions.act_window">
+        <field name="name">Textile Products</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_textile_product', '=', True)]</field>
+        <field name="context">{'default_is_textile_product': True}</field>
+        <field name="search_view_id" ref="product_template_search_view_textile"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new textile product
+            </p>
+            <p>
+                Manage your fabrics, yarns, and other textile items.
+            </p>
+        </field>
+    </record>
+</odoo>
